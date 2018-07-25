@@ -1,34 +1,18 @@
+## Guide
 
-## Eclpise Che: Manual install on OpenShift
+* Template based Install https://www.eclipse.org/che/docs/openshift-multi-user.html#openshift-container-platform
+* APB https://github.com/ansibleplaybookbundle/eclipse-che-apb
+
+## Cluster Admin Requirements
+
+If using the Che APB (instead of the template based install) the RoleBinding setup for the `che` ServiceAccount requires the ansible broker to have 'admin' sandbox role. See https://github.com/ansibleplaybookbundle/eclipse-che-apb#requirements
+& https://github.com/eclipse/che/blob/master/deploy/openshift/templates/che-server-template.yaml#L19-L27
+
+## Eclpise Che: Template based Install
 
 Follow the 'OpenShift Container Platform HTTP Setup' from https://www.eclipse.org/che/docs/openshift-multi-user.html#openshift-container-platform
 
 ```
-$ oc login https://cloudservices.skunkhenry.com:8443 --token=CZGpw-kIXLThhv8kB69GK6gPYniIL5cIb-ACrQzSTp4
-The server uses a certificate signed by an unknown authority.
-You can bypass the certificate check, but any data you send to the server could be intercepted by others.
-Use insecure connections? (y/n): y
-
-Logged into "https://cloudservices.skunkhenry.com:8443" as "admin" using the token provided.
-
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-  * default
-    kube-public
-    kube-service-catalog
-    kube-system
-    logging
-    management-infra
-    openshift
-    openshift-ansible-service-broker
-    openshift-infra
-    openshift-node
-    openshift-template-service-broker
-    openshift-web-console
-    test
-
-Using project "default".
-
 $ export ROUTING_SUFFIX=cloudservices.skunkhenry.com
 $ oc new-project che
 Now using project "che" on server "https://cloudservices.skunkhenry.com:8443".
