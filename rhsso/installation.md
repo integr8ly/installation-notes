@@ -11,12 +11,11 @@ This is the creation of resources in OpenShift might be possible to do with an o
 
 
 ## Manual setup steps
-- keystore setup https://access.redhat.com/documentation/en-us/jboss_enterprise_application_platform/6.1/html-single/security_guide/index#Generate_a_SSL_Encryption_Key_and_Certificate
+- keystore setup  before deployment https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#Example-Deploying-SSO
 
-- recommended to deploy from the webconsole UI there are a lot of configuration options
+- docs recommended to deploy from the webconsole UI.
 
-- Example setup with keystore
-https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#Example-Deploying-SSO
+
 
 # Possible Actions
 
@@ -31,32 +30,38 @@ As other services need keycloak this should probably be the first thing we insta
 
 https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_single_sign-on_for_openshift/tutorials#OSE-SSO-AUTH-TUTE
 
+
+example master config to be added under identityProviders:
+
 ```
-- name: rh_sso
-  challenge: false
-  login: true
-  mappingInfo: add
-  provider:
-    apiVersion: v1
-    kind: OpenIDIdentityProvider
-    clientID: openshift
-    clientSecret: fa9d8e36-b914-47f1-be38-5739bed81434
-    ca: xpaas.crt
-    urls:
-      authorize: https://sso-rhsso.cloudservices.skunkhenry.com/auth/realms/OpenShift/protocol/openid-connect/auth
-      token: https://sso-rhsso.cloudservices.skunkhenry.com/auth/realms/OpenShift/protocol/openid-connect/token
-      userInfo: https://sso-rhsso.cloudservices.skunkhenry.com/auth/realms/OpenShift/protocol/openid-connect/userinfo
-    claims:
-      id:
-      - sub
-      preferredUsername:
-      - preferred_username
-      name:
-      - name
-      email:
-      - email
+ - name: rh_sso
+    challenge: false
+    login: true
+    mappingInfo: add
+    provider:
+      apiVersion: v1
+      kind: OpenIDIdentityProvider
+      clientID: openshift
+      clientSecret: 14b201bd-70b7-46ba-ae36-2f84f0f6cec6
+      ca: xpaas.crt
+      urls:
+        authorize: https://secure-sso-sso.cloudservices.skunkhenry.com/auth/realms/openshift/protocol/openid-connect/auth
+        token: https://secure-sso-sso.cloudservices.skunkhenry.com/auth/realms/openshift/protocol/openid-connect/token
+        userInfo: https://secure-sso-sso.cloudservices.skunkhenry.com/auth/realms/openshift/protocol/openid-connect/userinfo
+      claims:
+        id:
+        - sub
+        preferredUsername:
+        - preferred_username
+        name:
+        - name
+        email:
+        - email
 
 ```      
+
+
+It is important when generating the ketstores to make sure you pass in the correct hostname 
 
 # Other Notes
 
