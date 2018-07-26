@@ -4,21 +4,30 @@
 
 ## Requirements
 
-* A `ReadWriteMany` volume available, this is a blocker for OpenShift Dedicated as it does not support RWX PVs. OpenShift Dedicated states it supports 3Scale APIcast only (https://www.openshift.com/products/dedicated/).
+* An AWS account with an S3 bucket created within it.
+* AWS access token and secret token (that has S3 read/write permissions).
 
 ## Install
 
-Pull the `amp.yml` template.
+Pull the `amp-s3.yml` template (we can't use the standard `amp.yml` because OSD doesn't allow RWX PVs). 
 
 ```bash
-curl https://raw.githubusercontent.com/3scale/3scale-amp-openshift-templates/master/amp/amp.yml > apb.yml
+curl https://raw.githubusercontent.com/3scale/3scale-amp-openshift-templates/2.2.0.GA/amp/amp-s3.yml > amp-s3.yml
 ```
 
-Create the resources in the template, providing the routing suffix of the cluster
-as the `WILDCARD_DOMAIN`.
+Create the resources in the template, with the following parameters:
+
+* `WILDCARD_DOMAIN` - The routing suffix of the cluster.
+* `AWS_REGION` - The region of the AWS bucket (e.g. `us-east-1`).
+* `AWS_BUCKET` - The name of the bucket to use in the `AWS_REGION`.
+* `AWS_ACCESS_KEY_ID` - AWS Access Key
+* `AWS_SECRET_ACCESS_KEY` - AWS Secret Access Key
+* `FILE_UPLOAD_STORAGE` - This should always have the value `s3`.
+
+For example.
 
 ```bash
-oc new-app -f amp.yml --param WILDCARD_DOMAIN=192.168.0.73.nip.io
+oc new-app -f amp.yml --param WILDCARD_DOMAIN=192.168.0.73.nip.io AWS_REGION=us-east-1 AWS_BUCKET=my-bucket AWS_ACCESS_KEY_ID=XXXXXXXXX AWS_SECRET_ACCESS_KEY=XXXXXXXXX FILE_UPLOAD_STORAGE=s3
 ```
 
 An output similar to the following will be printed.
@@ -126,4 +135,4 @@ An output similar to the following will be printed.
     Access your application via route 'api-3scale-apicast-production.192.168.0.73.nip.io'
     Access your application via route 'apicast-wildcard.192.168.0.73.nip.io'
     Run 'oc status' to view your app.
-```
+```g
