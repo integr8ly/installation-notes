@@ -4,7 +4,7 @@
 
 ## Requirements
 
-* `ReadWriteMany` volumes available.
+* A `ReadWriteMany` volume available, this is a blocker for OpenShift Dedicated as it does not support RWX PVs. OpenShift Dedicated states it supports 3Scale APIcast only (https://www.openshift.com/products/dedicated/).
 
 ## Install
 
