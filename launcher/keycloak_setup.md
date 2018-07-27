@@ -33,12 +33,12 @@ oc create -f oauthclient.yml
 
 Create an OpenShift Identify Provider in Keycloak
 
-* TODO
+![openshift_provider](openshift_provider.png)
 
-Create a Github Token
+Create a Github OAuth Client
 
 * TODO
 
 Create a Github Identity Provider in Keycloak
 
-* TODO
+![github_provider](github_provider.png)
