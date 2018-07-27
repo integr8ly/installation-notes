@@ -3,7 +3,7 @@
 Notes on various installations on openshift
 
 
-#Communications
+## Communications
 
 - IRC #integreatly
 
