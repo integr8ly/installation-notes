@@ -55,3 +55,18 @@ In the `launcher-clusters` config map, update with the following:
   consoleUrl: https://mycluster.example.com:8443 
   type: pro
 ```
+
+Create `template.yaml` & add:
+
+```
+apiVersion: oauth.openshift.io/v1
+grantMethod: auto
+kind: OAuthClient
+metadata:
+  name: cloudservices
+redirectURIs:
+  - http://keycloak-che.cloudservices.skunkhenry.com/auth/realms/che/broker/cloudservices/endpoint
+secret: 45e27750-a8aa-11e4-b2ea-3c970e4b7ffe # sample - generate this
+```
+
+Run `oc create -f template.yaml`
