@@ -1,28 +1,31 @@
 ## Guide
-https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#initial_setup
+https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/getting_started#deploying_the_rh_sso_for_openshift_image_using_application_template
 
 ## Cluster Admin Requirements
 
-- setting up imagetreams
-- replacing templates
+- replacing templates and imagestreams
 - image import 
+- role binding
 
-This is the creation of resources in OpenShift might be possible to do with an opertor as long as the correct RBAC rules were in place.
+https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/getting_started
 
-
-## Manual setup steps
-- keystore setup  before deployment https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#Example-Deploying-SSO
-
-- docs recommended to deploy from the webconsole UI.
+This is creation of resources in OpenShift might be possible to do with an opertor as long as the correct RBAC rules were in place.
 
 
+**Note** In our cluster the templates were already present. Which would remove some of the admin requirements. Not sure if this is the case for OSD or for the product demo clusters
 
-# Possible Actions
+
+
+# Actions
 
 - Create ansible playbook to automate the process outlined here
-https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#Example-Deploying-SSO
+https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/getting_started#deploying_the_rh_sso_for_openshift_image_using_application_template
 
 With possible prompts for overriding some of the values if needed. Although if it is for eval this may not be needed. We maybe able to just fill in defaults and generate passwords etc then output the result at the end of the install.
+We want to use the persistent template to avoid any issues with the pod being restarted / evicted etc so are going with the postgres persistent template
+
+https://github.com/jboss-openshift/application-templates/blob/master/docs/sso/sso72-x509-postgresql-persistent.adoc
+
 
 As other services need keycloak this should probably be the first thing we install we should then use this keycloak to configure the other services.
 
@@ -65,5 +68,4 @@ It is important when generating the ketstores to make sure you pass in the corre
 
 # Other Notes
 
-- In the cluster we setup the RHSSO 7.2 template was already present ( I assume it is part of our setup) but this template did not mention the keystore etc. Is this actually needed or can it just be done from the catalog without the need for creating a keystore as documented under
-https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html-single/red_hat_single_sign-on_for_openshift/index#Preparing-SSO-Authentication-for-OpenShift-Deployment ?
+- In the cluster we setup the RHSSO 7.2 template was already present ( I assume it is part of our setup) but this template did not mention the keystore etc. Which is ok
