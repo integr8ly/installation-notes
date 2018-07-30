@@ -69,3 +69,6 @@ It is important when generating the ketstores to make sure you pass in the corre
 # Other Notes
 
 - In the cluster we setup the RHSSO 7.2 template was already present ( I assume it is part of our setup) but this template did not mention the keystore etc. Which is ok
+
+# Advanced Clustered Setup 
+https://github.com/rhdemo/rh-sso
