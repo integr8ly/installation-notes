@@ -3,13 +3,14 @@
 * A Keycloak instance is installed as part of the ansible installation of the enmasse operator. This Keycloak instance is what authenticates users for accessing Agents & Brokers.
 * Agent & Broker pods are configured for auth via various `AUTHENTICATION_SERVICE_` env vars
 * An OpenShift v3 Identify provider is configured in Keycloak, which uses an OAuth ServiceAccount i.e. If you have an OpenShift a/c, you can login to an enmasse console (via Keycloak).
+* set of custom plugins installed that handle amqp client authentication
+*  The user that can access the console has to be the same user that provisioned the piece of enmasse as there is a link created between the openshift user and a user in the enmaase keycloak
+
+## Options
+
+Configure the Enmaase keycloak to use the cluster keycloak as an identity provider
 
 ## Questions
- - When we setup the OpenShift cluster to use RHSSO as an identity provider we could not login into the console using that user.
- (IE) we clicked on openshift, we clicked on rh_sso and put in the username password and got the following error
+
  
- ```
- {"error":"invalid_request","error_description":"Missing parameter: username"}
- ```
- 
-Flow : enmasse keycloak -> openshift -> cluster rhsso -> enmasse keycloak
+Flow : enmasse keycloak -> openshift -> rhsso -> enmasse keycloak
