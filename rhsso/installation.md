@@ -29,7 +29,7 @@ https://github.com/jboss-openshift/application-templates/blob/master/docs/sso/ss
 
 As other services need keycloak this should probably be the first thing we install we should then use this keycloak to configure the other services.
 
-#Configuring Openshift to use keycloak as an identity provider
+# Configuring Openshift to use keycloak as an identity provider
 
 https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_single_sign-on_for_openshift/tutorials#OSE-SSO-AUTH-TUTE
 
