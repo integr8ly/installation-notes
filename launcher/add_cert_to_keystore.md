@@ -14,31 +14,14 @@ echo -n "" | openssl s_client -connect cloudservices.skunkhenry.com:8443 | sed -
 Copy script & cert to pod
 
 ```bash
-oc cp `pwd`/configure-keystore.sh che/keycloak-2-cprcf:/opt/jboss/keycloak/standalone/data/keystore/configure-keystore.sh
-oc cp /tmp/cert.pem che/keycloak-2-cprcf:/opt/jboss/keycloak/standalone/data/keystore/cert.pem
+oc exec --namespace sso sso-1-xnq4w -- mkdir -p /opt/jboss/keycloak/standalone/data/keystore
+oc cp `pwd`/configure-keystore.sh che/sso-1-xnq4w:/opt/jboss/keycloak/standalone/data/keystore/configure-keystore.sh
+oc cp /tmp/cert.pem che/sso-1-xnq4w:/opt/jboss/keycloak/standalone/data/keystore/cert.pem
 ```
 
 Configure the keystore
 
 ```bash
-oc exec --namespace che keycloak-2-cprcf bash /opt/jboss/keycloak/standalone/data/keystore/configure-keystore.sh Password1
+oc exec --namespace che sso-1-xnq4w bash /opt/jboss/keycloak/standalone/data/keystore/configure-keystore.sh Password1
 ```
 
-
-Create an OAuthClient in OpenShift
-
-```bash
-oc create -f oauthclient.yml
-```
-
-Create an OpenShift Identify Provider in Keycloak
-
-![openshift_provider](openshift_provider.png)
-
-Create a Github OAuth Client
-
-* TODO
-
-Create a Github Identity Provider in Keycloak
-
-![github_provider](github_provider.png)
