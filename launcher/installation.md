@@ -7,6 +7,17 @@
 * OAuthClient created in the cluster
 * New Client in the OpenShift cluster's Keycloak
 
+## Install Launcher Keycloak
+
+At this time a separate Keycloak is used by Launcher than the Keycloak used by OpenShift.
+This is due to integration issues that need to be worked through i.e. how to use a single Keycloak with Launcher for both Authentication (signing into launcher) and OpenShift a/c Authorization (letting launcher create things in users namespace).
+
+Install `Red Hat Single Sign-On 7.2 + PostgreSQL` from the Service Catalog into a new namespace called `launcher`.
+
+* Take note of the exposed Route.
+* Get admin credentials using `oc env dc/sso --list|grep SSO_ADMIN`
+* Login and create a new realm `launcher`.
+
 ## Launcher: Template based Install
 
 Clone the Launcher template:
@@ -17,9 +28,9 @@ Login to OpenShift:
 
 `oc login <server>`
 
-Create a project:
+Switch to launcher project:
 
-`oc new-project launcher`
+`oc project launcher`
 
 Add the Launcher template:
 
@@ -28,26 +39,28 @@ cd launcher-openshift-templates
 oc create -f openshift/launcher-template.yaml
 ```
 
-Take note of the exposed Route for Launcher's frontend
+Create launcher from the template, specifying below parameter:
+
+* `LAUNCHER_KEYCLOAK_URL`
+* Note any params that have empty values deliberately
+
+```
+oc new-app --template=fabric8-launcher --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_USERNAME= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_PASSWORD= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL= --param=LAUNCHER_KEYCLOAK_URL={KEYCLOAK_URL}/auth --param=LAUNCHER_KEYCLOAK_REALM=launcher
+```
+
+Take note of the exposed Route for Launcher's frontend for later
+
+```
+oc get route launcher
+```
 
 TODO. Ansible?
-
-## Keycloak for Launcher
-
-At this time a separate Keycloak is used by Launcher than the Keycloak used by OpenShift.
-This is due to integration issues that need to be worked through i.e. how to use a single Keycloak with Launcher for both Authentication (signing into launcher) and OpenShift a/c Autorization (letting launcher create things in users namespace).
-
-### Install Launcher Keycloak
-
-Install from the `Red Hat Single Sign-On 7.2 + PostgreSQL` item in the Service Catalog to a new namespace.
-Take note fo the exposed Route.
-Login and create a new realm `launcher`.
 
 ### Create a new Client in **OpenShift's Keycloak** (for Launcher's Keycloak)
 
 * Import from `launcher-openshift-users.json`
-* `Root URL` & `Admin URL` set to the URL of Launcher Keycloak
-* `Valid Redirect URIs`, & `Web Origins` set to the same url, suffixed with `/*` 
+* Set the `Root URL` to the URL of Launcher Keycloak
+* After creating, set `Valid Redirect URIs`, & `Web Origins` to the same url
 * Match any other settings as seen below
 
 ![launcher_openshift_client](launcher_openshift_client.png)
@@ -55,8 +68,8 @@ Login and create a new realm `launcher`.
 ### Create a new Client in **Launcher's Keycloak** (for Launcher sign in)
 
 * Import from `launcher-public.json`
-* `Root URL` & `Admin URL` set to the URL of Launcher's Frontend/Route
-* `Valid Redirect URIs`, & `Web Origins` set to the same url, suffixed with `/*` 
+* Set the `Root URL` to the URL of Launcher's Frontend/Route
+* After creating, set `Valid Redirect URIs`, & `Web Origins` to the same url (Web Origins for root url and `/*`)
 * Match any other settings as seen below
 
 ![launcher_public_client](launcher_public_client.png)
@@ -106,7 +119,7 @@ redirectURIs:
 secret: 45e27750-a8aa-11e4-b2ea-3c970e4b7ffe # sample - generate this
 ```
 
-Run `oc create -f template.yaml`
+Run `oc create -f oauthclient.yaml`
 
 ### Create a Github Identity provider in **Launcher's Keycloak** (for repo creation)
 
@@ -123,18 +136,11 @@ Create a Github OAuth App (Settings > Org > Developer Settings/OAuthApps), notin
 
 ### Launcher Config Map
 
-In the `launcher` config-map, blank these values:
-
-* `launcher.missioncontrol.openshift.api.url`
-* `launcher.missioncontrol.openshift.console.url`
-
-And set these, using the Launcher Keycloak url instead:
+In the `launcher` config-map, set the below value:
 
 * `launcher.keycloak.client.id` = `launcher-public`
-* `launcher.keycloak.realm` = `launcher`
-* `launcher.keycloak.url`	= `http://keycloak.example.com/auth`
 
-In the `launcher-clusters` config map, update with the following:
+In the `launcher-clusters` config map, replace with the following (using your OpenShift cluster url instead):
 
 ```
 - id: cloudservices

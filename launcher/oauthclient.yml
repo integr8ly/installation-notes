@@ -4,4 +4,5 @@ kind: OAuthClient
 metadata:
   name: cloudservices
 redirectURIs:
-- http://keycloak-che.cloudservices.skunkhenry.com/auth/realms/che/broker/cloudservices/endpoint
+  - https://secure-sso-launcher.cloudservices.skunkhenry.com/auth/realms/launcher/broker/cloudservices/endpoint
+secret: somesecret
