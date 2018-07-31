@@ -1,6 +1,8 @@
 # Ignite Installation notes
 
-Guide: https://access.redhat.com/documentation/en-us/red_hat_fuse/7.0/html-single/integrating_applications_with_ignite/#how-you-use
+Guide: 
+- https://access.redhat.com/documentation/en-us/red_hat_fuse/7.0/html-single/integrating_applications_with_ignite/#installing-on-ocp
+- https://access.redhat.com/documentation/en-us/red_hat_fuse/7.0/html-single/integrating_applications_with_ignite/#how-you-use
 
 * No cluster admin access is needed during the installation;
 * It doesn't require keycloak;
