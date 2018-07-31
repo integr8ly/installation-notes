@@ -73,6 +73,12 @@ Login and create a new realm `launcher`.
 
 ![keycloak_provider](keycloak_provider.png)
 
+* After creating, set this Identity Provider (`keycloak-oidc`) as the default for `Browser` authentication
+
+![keycloak_as_default_provider](keycloak_as_default_provider.png)
+
+![keycloak_as_default_provider_config](keycloak_as_default_provider_config.png)
+
 ### Create an OpenShift 3 Identity Provider in **Launcher's Keycloak** (for authorization to create resources in users namespace)
 
 * `Client ID` set to `cloudservices` (must match the cluster `id` in the `launcher-clusters` configmap)
