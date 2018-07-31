@@ -31,7 +31,7 @@ Switch to launcher project:
 Add the Launcher template:
 
 ```
-oc create -f https://raw.githubusercontent.com/fabric8-launcher/launcher-openshift-templates/master/openshift/launcher-template.yaml
+oc create -f https://launcher.fabric8.io/latest-launcher-template
 ```
 
 Create launcher from the template, specifying below parameter:
