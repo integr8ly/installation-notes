@@ -42,10 +42,11 @@ oc create -f openshift/launcher-template.yaml
 Create launcher from the template, specifying below parameter:
 
 * `LAUNCHER_KEYCLOAK_URL`
+* `LAUNCHER_KEYCLOAK_CLIENT_ID`
 * Note any params that have empty values deliberately
 
 ```
-oc new-app --template=fabric8-launcher --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_USERNAME= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_PASSWORD= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL= --param=LAUNCHER_KEYCLOAK_URL={KEYCLOAK_URL}/auth --param=LAUNCHER_KEYCLOAK_REALM=launcher
+oc new-app --template=fabric8-launcher --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_USERNAME= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_PASSWORD= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_API_URL= --param=LAUNCHER_MISSIONCONTROL_OPENSHIFT_CONSOLE_URL= --param=LAUNCHER_KEYCLOAK_URL={KEYCLOAK_URL}/auth --param=LAUNCHER_KEYCLOAK_REALM=launcher --param=LAUNCHER_KEYCLOAK_CLIENT_ID=launcher-public
 ```
 
 Take note of the exposed Route for Launcher's frontend for later
@@ -135,10 +136,6 @@ Create a Github OAuth App (Settings > Org > Developer Settings/OAuthApps), notin
 ## Post-install Configuration
 
 ### Launcher Config Map
-
-In the `launcher` config-map, set the below value:
-
-* `launcher.keycloak.client.id` = `launcher-public`
 
 In the `launcher-clusters` config map, replace with the following (using your OpenShift cluster url instead):
 
