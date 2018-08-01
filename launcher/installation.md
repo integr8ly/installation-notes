@@ -20,10 +20,6 @@ Install `Red Hat Single Sign-On 7.2 + PostgreSQL` from the Service Catalog into 
 
 ## Launcher: Template based Install
 
-Clone the Launcher template:
-
-`git clone git@github.com:fabric8-launcher/launcher-openshift-templates.git`
-
 Login to OpenShift:
 
 `oc login <server>`
@@ -35,8 +31,7 @@ Switch to launcher project:
 Add the Launcher template:
 
 ```
-cd launcher-openshift-templates
-oc create -f openshift/launcher-template.yaml
+oc create -f https://launcher.fabric8.io/latest-launcher-template
 ```
 
 Create launcher from the template, specifying below parameter:
