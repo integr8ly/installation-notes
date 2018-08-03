@@ -37,7 +37,7 @@ oc delete route keycloak
 ### Configure che-server with Self Signed Certificate
 
 ```
-echo "" | openssl s_client -connect cloudservices.skunkhenry.com:8443 -prexit 2>/dev/null | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' > ca.crt
+echo "" | openssl s_client -showcerts -connect cloudservices.skunkhenry.com:8443 -prexit 2>/dev/null | openssl x509 -outform PEM > ca.crt
 CERTIFICATE=$(cat ./ca.crt)
 oc new-app -f multi/openshift-certificate-secret.yaml -p CERTIFICATE="${CERTIFICATE}"
 ```
