@@ -15,6 +15,9 @@ If using the Che APB (instead of the template based install) the RoleBinding set
 Follow below steps based on the 'Deploy multi user Che with Postgres but connect to own Keycloak instance' guide here https://github.com/eclipse/che/tree/master/deploy/openshift/templates#deploy-multi-user-che-with-postgres-but-connect-to-own-keycloak-instance-https
 
 ```
+git clone git@github.com:eclipse/che
+cd deploy/openshift/templates
+
 oc new-project che
 oc new-app -f multi/postgres-template.yaml
 oc apply -f pvc/che-server-pvc.yaml
@@ -29,6 +32,14 @@ oc new-app -f che-server-template.yaml -p ROUTING_SUFFIX=${ROUTING_SUFFIX} \
 oc set volume dc/che --add -m /data --name=che-data-volume --claim-name=che-data-volume
 oc apply -f https
 oc delete route keycloak
+```
+
+### Configure che-server with Self Signed Certificate
+
+```
+echo "" | openssl s_client -connect cloudservices.skunkhenry.com:8443 -prexit 2>/dev/null | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' > ca.crt
+CERTIFICATE=$(cat ./ca.crt)
+oc new-app -f multi/openshift-certificate-secret.yaml -p CERTIFICATE="${CERTIFICATE}"
 ```
 
 ### Keycloak Client in **OpenShift's Keycloak**
