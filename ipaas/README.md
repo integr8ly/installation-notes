@@ -32,3 +32,10 @@ $ bash install_ocp.sh \
 ```
 
 Note: the script will delete the project (if specified).
+```
+
+## Uninstall
+
+```
+oc delete all,secrets,configmaps -l app=fuse-ignite
+```
