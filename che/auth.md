@@ -10,3 +10,17 @@
 * Keycloak can be configured (manually) to do User Federation (e.g. LDAP) or Social Login & Brokering if needed, but the default keycloak instance has no Federation or Brokering.
   * https://www.eclipse.org/che/docs/user-management.html
 * A ServiceAccount OAuthClient is *NOT* used by che
+
+# Github Integration
+
+Che has the ability to integrate with Github, providing 2 main features:
+
+* Import a git repo as a Che Project (shows a list of user's repos)
+* Do version control from the Che IDE
+
+There are 2 ways to configure Che server for Github integration.
+
+* Set env vars in Che server for a github client id & secret (embedded/single user mode)
+* Defer to a Github Identity Provider in Keycloak (delegated/multi user mode)
+
+More info here https://www.eclipse.org/che/docs/user-management.html#social-login-and-brokering
