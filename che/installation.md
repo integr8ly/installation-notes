@@ -49,3 +49,15 @@ oc new-app -f multi/openshift-certificate-secret.yaml -p CERTIFICATE="${CERTIFIC
 * Verify other settings as per screenshot below
 
 ![che_public_client](che_public_client.png)
+
+### Github Identity Provider in **OpenShift's Keycloak**
+
+Create a Github OAuth App (Settings > Org > Developer Settings/OAuthApps), noting the `Client ID` & `Client Secret`. The `Authorization callback URL` of the OAuth App must be set to the `Redirect URI` of the Github Identity Provider in Keycloak e.g. 'https://secure-sso.cloudservices.skunkhenry.com/auth/realms/launcher/broker/github/endpoint'
+
+* Copy the `Redirect URI` into the `Authorization callback URL` field in the Github OAuth App
+* Set the `Client ID` and `Client Secret` to match whats in the Github OAuth App
+* Default scopes of `repo,user,write:public_key`
+* Match any other settings as seen below
+
+![che_github_provider](che_github_provider.png)
+
