@@ -32,7 +32,6 @@ $ bash install_ocp.sh \
 ```
 
 Note: the script will delete the project (if specified).
-```
 
 ## Uninstall
 
