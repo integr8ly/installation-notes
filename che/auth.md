@@ -20,7 +20,7 @@ Che has the ability to integrate with Github, providing 2 main features:
 
 There are 2 ways to configure Che server for Github integration.
 
-* Set env vars in Che server for a github client id & secret (embedded/single user mode)
+* Set env vars `CHE_OAUTH_GITHUB_CLIENTID` and `CHE_OAUTH_GITHUB_CLIENTSECRET` in Che server (embedded/single user mode)
 * Defer to a Github Identity Provider in Keycloak (delegated/multi user mode)
 
 More info here https://www.eclipse.org/che/docs/user-management.html#social-login-and-brokering
